@@ -1,7 +1,7 @@
 /*	Author: mchoi041
  *  Partner(s) Name: Alberto Bengo
- *	Lab Section:
- *	Assignment: Lab #  Exercise #
+ *	Lab Section:023
+ *	Assignment: Lab 2  Exercise #
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -14,10 +14,21 @@
 
 int main(void) {
     /* Insert DDR and PORT initializations */
+  DDRA = 0x00; PORTA = 0xFF;
+  DDRB = 0xFF; PORTB = 0x00;
 
+  unsigned char tmpB = 0x00;
+  unsigned char tmpA = 0x00;
     /* Insert your solution below */
     while (1) {
-
+      tmpA = PINA & 0x01;
+      
+      if (tmpA == 0x01) {
+	tmpB = (tmpB & 0xFC) | 0x01;
+      } else {
+	tmpB = (tmpB & 0xFC) | 0x02;
+      }
+      PORTB = tmpB;
     }
     return 1;
 }
