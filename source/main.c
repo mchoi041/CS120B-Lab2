@@ -1,7 +1,7 @@
 /*	Author: mchoi041
  *  Partner(s) Name: Alberto Bengo
  *	Lab Section:023
- *	Assignment: Lab 2  Exercise #3
+ *	Assignment: Lab 2  Exercise #4
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -15,27 +15,41 @@
 int main(void) {
     
   DDRA = 0x00; PORTA = 0xFF;
-  DDRC = 0xFF; PORTC = 0x00;
+  DDRB = 0x00; PORTB = 0xFF;
+  DDRC = 0x00; PORTC = 0xFF;
+  DDRD = 0xFF; PORTD = 0x00;
 
-  unsigned char cntavail = 0x00;
+  unsigned char shiftedWeight = 0x00;
+  unsigned char totalWeight = 0x00;
   unsigned char tmpA = 0x00;
-  unsigned char i = 0;
+  unsigned char tmpB = 0x00;
+  unsigned char tmpC = 0x00;
+  unsigned char tmpD = 0x00;
 
     while (1) {
-      cntavail = 0x00;
-      tmpA = PINA & 0x0F;
+      tmpA = PINA;
+      tmpB = PINB; 
+      tmpC = PINC;
+      tmpD = 0x00;
 
-      for (i = 0; i < 4; i++) {
-	if(((tmpA & 0x01) == 0x00)) {
-	  cntavail = cntavail + 1;
-	}
-	tmpA = tmpA >> 1;
+      totalWeight = tmpA + tmpB + tmpC;
+      
+      if(tmpA > tmpC) {
+	shiftedWeight = tmpA - tmpC;
+      }
+      else if(tmpC > tmpA) {
+	shiftedWeight = tmpC - tmpA;
       }
       
-      if(cntavail == 0x00) { 
-	cntavail = 0x80;
+      if(totalWeight > 140) {
+	tmpD = 0x01;
       }
-      PORTC = cntavail;
+      if(shiftedWeight > 80) {
+	tmpD = tmpD | 0x02;
+      }
+      tmpD = tmpD + (totalWeight & 0xFC);
+      PORTD = tmpD;
+      
     }
     return 1;
 }
