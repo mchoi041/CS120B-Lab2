@@ -19,24 +19,17 @@ int main(void) {
 
   unsigned char cntavail = 0x00;
   unsigned char tmpA = 0x00;
-    
+  unsigned char i = 0;
+
     while (1) {
+      cntavail = 0x00;
       tmpA = PINA & 0x0F;
 
-      if (tmpA == 0x00) {
-	cntavail = 0x04;
-      }
-      else if (tmpA == 0x01) {
-	cntavail = 0x03;
-      }
-      else if (tmpA == 0x03) {
-	cntavail = 0x02;
-      }
-      else if (tmpA == 0x07) {
-	cntavail = 0x01;
-      }
-      else if (tmpA == 0x0F) {
-	cntavail = 0x00;
+      for (i = 0; i < 4; i++) {
+	if(((tmpA & 0x01) == 0x00)) {
+	  cntavail = cntavail + 1;
+	}
+	tmpA = tmpA >> 1;
       }
 
       PORTC = cntavail;
