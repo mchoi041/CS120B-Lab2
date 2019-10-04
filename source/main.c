@@ -1,7 +1,7 @@
 /*	Author: mchoi041
  *  Partner(s) Name: Alberto Bengo
  *	Lab Section:023
- *	Assignment: Lab 2  Exercise #2
+ *	Assignment: Lab 2  Exercise #3
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -31,7 +31,10 @@ int main(void) {
 	}
 	tmpA = tmpA >> 1;
       }
-
+      
+      if(cntavail == 0x00) { 
+	cntavail = 0x80;
+      }
       PORTC = cntavail;
     }
     return 1;
